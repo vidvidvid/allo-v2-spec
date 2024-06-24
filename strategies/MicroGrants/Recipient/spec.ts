@@ -1,4 +1,4 @@
-import { Address, BeforeAll, BigInt, Event, LiveTable, OnEvent, Property, Spec, isNullAddress } from '@spec.dev/core'
+import { Address, BeforeAll, BigInt, Event, isNullAddress,LiveTable, OnEvent, Property, Spec } from '@spec.dev/core'
 
 import { decodeMicroGrantsRegistrationData } from '../../../shared/decoders.ts'
 import { getStatusFromInt } from '../../../shared/status.ts'

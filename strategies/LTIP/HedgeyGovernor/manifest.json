@@ -1,0 +1,7 @@
+{
+    "namespace": "allov2",
+    "name": "LTIPHedgeyGovernor",
+    "version": "0.0.1",
+    "displayName": "LTIP Hedgey Governor",
+    "description": "index base variables in LTIP Hedgey Governor strategy"
+  }

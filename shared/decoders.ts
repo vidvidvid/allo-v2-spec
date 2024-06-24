@@ -1,4 +1,4 @@
-import { decodeAbi, isNullAddress } from "@spec.dev/core"
+import { decodeAbi, isNullAddress, Address } from "@spec.dev/core"
 
 import { formatMetadataAsStruct } from "./formatter.ts"
 
@@ -386,4 +386,95 @@ export function decodeSQFSuperFluidRegistrationData(
     recipientAddress: recipientAddress.toLowerCase(),
     metadata: formatMetadataAsStruct(metadata),
   }
+}
+
+export function decodeLTIPHedgeyGovernorInitializedData(
+  data: any
+): {
+  governorContract: Address;
+  votingBlock: number;
+  hedgeyContract: Address;
+  vestingAdmin: Address;
+  adminTransferOBO: boolean;
+  registryGating: boolean;
+  metadataRequired: boolean;
+  votingThreshold: number;
+  registrationStartTime: number;
+  registrationEndTime: number;
+  reviewStartTime: number;
+  reviewEndTime: number;
+  allocationStartTime: number;
+  allocationEndTime: number;
+  distributionStartTime: number;
+  distributionEndTime: number;
+  vestingPeriod: number;
+} {
+  // Decode InitializeParamsGovernor
+  const {
+    governorContract,
+    votingBlock,
+    initializeParams: initializeParamsHedgeyData,
+  } = decodeAbi(data, [
+    "address",
+    "uint256",
+    "tuple(address,address,bool,tuple(bool,bool,uint256,uint64,uint64,uint64,uint64,uint64,uint64,uint64,uint64))",
+  ]) as {
+    governorContract: Address;
+    votingBlock: number;
+    initializeParams: {
+      hedgeyContract: Address;
+      vestingAdmin: Address;
+      adminTransferOBO: boolean;
+      initializeParams: {
+        registryGating: boolean;
+        metadataRequired: boolean;
+        votingThreshold: number;
+        registrationStartTime: number;
+        registrationEndTime: number;
+        reviewStartTime: number;
+        reviewEndTime: number;
+        allocationStartTime: number;
+        allocationEndTime: number;
+        distributionStartTime: number;
+        distributionEndTime: number;
+        vestingPeriod: number;
+      };
+    };
+  };
+
+  // Decode InitializeParamsHedgey
+  const {
+    registryGating,
+    metadataRequired,
+    votingThreshold,
+    registrationStartTime,
+    registrationEndTime,
+    reviewStartTime,
+    reviewEndTime,
+    allocationStartTime,
+    allocationEndTime,
+    distributionStartTime,
+    distributionEndTime,
+    vestingPeriod,
+  } = initializeParamsHedgeyData.initializeParams;
+
+  return {
+    governorContract,
+    votingBlock,
+    hedgeyContract: initializeParamsHedgeyData.hedgeyContract,
+    vestingAdmin: initializeParamsHedgeyData.vestingAdmin,
+    adminTransferOBO: initializeParamsHedgeyData.adminTransferOBO,
+    registryGating,
+    metadataRequired,
+    votingThreshold,
+    registrationStartTime,
+    registrationEndTime,
+    reviewStartTime,
+    reviewEndTime,
+    allocationStartTime,
+    allocationEndTime,
+    distributionStartTime,
+    distributionEndTime,
+    vestingPeriod,
+  };
 }

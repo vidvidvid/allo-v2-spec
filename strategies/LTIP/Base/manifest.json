@@ -1,0 +1,7 @@
+{
+    "namespace": "allov2",
+    "name": "LTIPBase",
+    "version": "0.0.1",
+    "displayName": "LTIP Base",
+    "description": "index base events in LTIP strategy"
+  }
